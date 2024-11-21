@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://pipeline1.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_6a8ac8005a834754b80ecb40967bdfbf }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_355d2a642b974f8ca5498ea9a81bc482 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername }}
+        password: ${{ secrets.AzureAppService_ContainerPassword }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: pipeline1.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_6a8ac8005a834754b80ecb40967bdfbf }}/password-generator:${{ github.sha }}
+        tags: pipeline1.azurecr.io/${{ secrets.AzureAppService_ContainerUsername }}/password-generator:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'pipeline'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_35a6c9ec280148029648399d8f0be4c1 }}
-        images: 'pipeline1.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_6a8ac8005a834754b80ecb40967bdfbf }}/password-generator:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile }}
+        images: 'pipeline1.azurecr.io/${{ secrets.AzureAppService_ContainerUsername }}/password-generator:${{ github.sha }}'
